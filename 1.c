@@ -13,7 +13,7 @@ int main(int argc[] , char *argv[])
         return 1;
     }
     else if (pid1 == 0) {
-    	printf("\nДочерний процесс : %d", getpid()); 
+    	printf("\nДочерний процесс : %d; его родительский процесс %d", getpid(), getppid());  
     	print_time();
     }
     else {
@@ -23,16 +23,17 @@ int main(int argc[] , char *argv[])
         	return 1;
         }
     	else if (pid2 == 0) {
-    		printf("\nДочерний процесс : %d", getpid()); 
+    		printf("\nДочерний процесс : %d; его родительский процесс %d", getpid(), getppid()); 
     		print_time();
     	}
     	else {
-    		printf("\nРодительский процесс : %d", getpid()); 
-    		print_time();
-    		
     		wait(NULL);
             wait(NULL);
-          
+            
+    		printf("\nРодительский процесс : %d; родительский процесс этого процесса %d", getpid(), getpid()); 
+    		print_time();
+    		printf("\n");
+    		
         	system("ps -x");
         	char str[100];
 			sprintf(str, "ps -fC 1.exe");	
