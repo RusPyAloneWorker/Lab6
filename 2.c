@@ -9,10 +9,10 @@
 
 int main() {
     char command[200];
-    char* args[60];
+    char *args[60];
     
     while (1) {
-        printf("Введите команду: ");
+        printf("Введите команду: \n");
         fgets(command, sizeof(command), stdin);
         
         // Удаление символа новой строки из команды
@@ -36,7 +36,7 @@ int main() {
     return 0;
 }
 
-void execute_command(char* args[]) {
+void execute_command(char *args[]) {
 	int pid = fork();
 	if (pid < 0) {
 		fprintf(stderr, "Ошибка при создании процесса.\n");
@@ -44,17 +44,13 @@ void execute_command(char* args[]) {
 	} 
 	else if (pid == 0) {
 		// Код дочернего процесса
-		execvp(args[0], args);
+        	sleep(5);
 		int result = execvp(args[0], args);
-        int error = errno;
+        	int error = errno;
 		if (result == -1) {
 			fprintf(stderr, "Error code: %d\n", error);
 			exit(error);
 		}
-            
 		exit(1); // Выходим из дочернего процесса
 	} 
-	else {
-    	wait(NULL); // Родитель ждет выполнение дочернего процесса
-	}
 }
